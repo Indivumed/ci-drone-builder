@@ -1,7 +1,7 @@
 FROM docker:18.09.6-dind
 
 RUN apk update
-RUN apk add python3-dev libffi-dev openssl-dev gcc libc-dev make py3-pip curl bash gnupg \
+RUN apk add python3-dev libffi-dev openssl-dev gcc libc-dev make py3-pip curl bash gnupg git \
     && echo "source /etc/profile" >> ~/.bashrc
 RUN pip3 install --upgrade pip
 # install docker-compose and aws cli
