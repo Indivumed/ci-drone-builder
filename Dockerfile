@@ -1,4 +1,4 @@
-FROM docker:18.09.6-dind
+FROM docker:19.03.1-dind
 
 RUN apk update
 RUN apk add python3-dev libffi-dev openssl-dev gcc libc-dev make py3-pip curl wget bash git \
