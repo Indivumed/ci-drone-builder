@@ -1,4 +1,4 @@
-FROM docker:19.03.1-dind
+FROM docker:19.03.8-dind
 
 RUN apk update
 RUN apk add python3-dev libffi-dev openssl-dev gcc libc-dev make py3-pip curl wget bash git \
@@ -11,7 +11,7 @@ RUN pip3 install docker-compose awscli kubernetes \
   && aws --version
 # install aws-iam-authenticator
 RUN curl -o /usr/local/bin/aws-iam-authenticator \
-    https://amazon-eks.s3-us-west-2.amazonaws.com/1.13.7/2019-06-11/bin/linux/amd64/aws-iam-authenticator \
+    https://amazon-eks.s3.us-west-2.amazonaws.com/1.15.10/2020-02-22/bin/linux/amd64/aws-iam-authenticator \
    && chmod +x /usr/local/bin/aws-iam-authenticator \
    && aws-iam-authenticator version
 # install kubectl
@@ -23,6 +23,6 @@ RUN KUBECTL_VERSION=$(curl -s https://storage.googleapis.com/kubernetes-release/
   && echo "source <(kubectl completion bash) \nalias k=kubectl \ncomplete -F __start_kubectl k" >> ~/.bashrc
 # install gomplate
 RUN curl -sL -o /usr/local/bin/gomplate \
-    https://github.com/hairyhenderson/gomplate/releases/download/v3.5.0/gomplate_linux-amd64 \
+    https://github.com/hairyhenderson/gomplate/releases/download/v3.6.0/gomplate_linux-amd64 \
    && chmod -c +x /usr/local/bin/gomplate \
    && gomplate --version

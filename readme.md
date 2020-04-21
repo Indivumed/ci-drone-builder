@@ -1,4 +1,4 @@
-#### An docker image that supports:
+#### An docker image that is based on docker-dind and supports:
 * `docker`: Docker in Docker - The hosts Docker socket must be mounted into the container (`/var/run/docker.sock`).
 * `docker-compose`: Define and run multiple docker applications.
 * `kubectl`: Kubernetes (K8s) CLI.
