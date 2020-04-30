@@ -9,6 +9,11 @@ RUN pip3 install docker-compose awscli kubernetes \
   && docker-compose --version \
   && echo "complete -C '/usr/bin/aws_completer' aws" >> ~/.bashrc \
   && aws --version
+# install aws-iam-authenticator
+RUN curl -o /usr/local/bin/aws-iam-authenticator \
+    https://amazon-eks.s3.us-west-2.amazonaws.com/1.15.10/2020-02-22/bin/linux/amd64/aws-iam-authenticator \
+   && chmod +x /usr/local/bin/aws-iam-authenticator \
+   && aws-iam-authenticator version
 # install kubectl
 RUN KUBECTL_VERSION=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt) \
   && curl --tlsv1.3 --ssl-reqd --output /usr/local/bin/kubectl \
