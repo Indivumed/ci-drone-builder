@@ -23,7 +23,7 @@ RUN KUBECTL_VERSION=$(curl -s https://storage.googleapis.com/kubernetes-release/
   && echo "source <(kubectl completion bash) \nalias k=kubectl \ncomplete -F __start_kubectl k" >> ~/.bashrc
 # install kustomize
 RUN curl -L https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv3.5.4/kustomize_v3.5.4_linux_amd64.tar.gz | tar zx \
-  && sudo install -t /usr/local/bin kustomize
+  && install -t /usr/local/bin kustomize
 # install gomplate
 RUN curl -sL -o /usr/local/bin/gomplate \
     https://github.com/hairyhenderson/gomplate/releases/download/v3.6.0/gomplate_linux-amd64 \
