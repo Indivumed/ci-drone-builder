@@ -5,7 +5,8 @@ RUN apk add python3-dev libffi-dev openssl-dev gcc libc-dev make py3-pip curl wg
     && echo "source /etc/profile" >> ~/.bashrc
 RUN pip3 install --upgrade pip
 # install docker-compose and AWS tools
-RUN pip3 install docker-compose awscli awsebcli kubernetes \
+RUN pip3 install docker-compose==1.25.5 awscli==1.18.49 awsebcli==3.18.1 \
+                 kubernetes==11.0.0 six==1.11.0 requests==2.20.1 \
   && docker-compose --version \
   && echo "complete -C '/usr/bin/aws_completer' aws" >> ~/.bashrc \
   && aws --version
