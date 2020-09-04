@@ -2,6 +2,7 @@ FROM docker:19.03.8-dind
 ENV TZ=UTC
 RUN apk update
 RUN apk add python3-dev libffi-dev openssl-dev gcc libc-dev make py3-pip curl wget bash git \
+            sqlite3 \
     && echo "source /etc/profile" >> ~/.bashrc
 RUN pip3 install --upgrade pip
 # install docker-compose and AWS tools
@@ -23,10 +24,18 @@ RUN KUBECTL_VERSION=$(curl -s https://storage.googleapis.com/kubernetes-release/
   && kubectl version --client=true \
   && echo "source <(kubectl completion bash) \nalias k=kubectl \ncomplete -F __start_kubectl k" >> ~/.bashrc
 # install kustomize
-RUN curl -L https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv3.5.4/kustomize_v3.5.4_linux_amd64.tar.gz | tar zx \
-  && install -t /usr/local/bin kustomize
+RUN kustomize_version="v3.6.1" \
+  && curl --location \
+    "https://nexus.indivumed.dev/repository/mocca/pipe-src/kustomize/${kustomize_version}/kustomize_${kustomize_version}_linux_amd64.tar.gz" \
+    | tar --extract --gzip \
+  && install --target-directory=/usr/local/bin kustomize
 # install gomplate
 RUN curl -sL -o /usr/local/bin/gomplate \
     https://github.com/hairyhenderson/gomplate/releases/download/v3.6.0/gomplate_linux-amd64 \
    && chmod -c +x /usr/local/bin/gomplate \
    && gomplate --version
+# install argo cli
+RUN argo_version="v2.8.2" \
+  && curl --location --output argo \
+    https://github.com/argoproj/argo/releases/download/"${argo_version}"/argo-linux-amd64 \
+  && install --target-directory=/usr/local/bin/ argo
