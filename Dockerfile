@@ -1,8 +1,8 @@
-FROM docker:19.03.8-dind
+FROM docker:19.03.12-dind
 ENV TZ=UTC
 RUN apk update
-RUN apk add python3-dev libffi-dev openssl-dev gcc libc-dev make py3-pip curl wget bash git \
-            sqlite3 \
+RUN apk add python3-dev libffi-dev openssl-dev gcc libc-dev make py3-pip curl wget \
+            bash git sqlite \
     && echo "source /etc/profile" >> ~/.bashrc
 RUN pip3 install --upgrade pip
 # install docker-compose and AWS tools
