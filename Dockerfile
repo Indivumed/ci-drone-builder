@@ -1,8 +1,8 @@
-FROM docker:19.03.12-dind
+FROM docker:20.10.3-dind
 ENV TZ=UTC
 RUN apk update
-RUN apk add python3-dev py3-pip libffi-dev openssl-dev gcc libc-dev make \
-            curl wget bash git sqlite jq \
+RUN apk add python3-dev py3-pip rust libffi-dev openssl-dev gcc libc-dev make \
+            curl wget bash git sqlite jq cargo \
     && echo "source /etc/profile" >> ~/.bashrc
 RUN pip3 install --upgrade pip
 # install docker-compose and AWS tools
@@ -14,7 +14,7 @@ RUN pip3 install --use-feature=2020-resolver --ignore-installed \
   && aws --version
 # install aws-iam-authenticator
 RUN curl -o /usr/local/bin/aws-iam-authenticator \
-    https://amazon-eks.s3.us-west-2.amazonaws.com/1.15.10/2020-02-22/bin/linux/amd64/aws-iam-authenticator \
+    https://amazon-eks.s3.us-west-2.amazonaws.com/1.18.9/2020-11-02/bin/darwin/amd64/aws-iam-authenticator \
    && chmod +x /usr/local/bin/aws-iam-authenticator \
    && aws-iam-authenticator version
 # install kubectl
@@ -29,14 +29,16 @@ RUN kustomize_version="v3.6.1" \
   && curl --location \
     "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F${kustomize_version}/kustomize_${kustomize_version}_linux_amd64.tar.gz" \
     | tar --extract --gzip \
-  && install -t /usr/local/bin kustomize
+  && install -t /usr/local/bin kustomize \
+  && rm kustomize
 # install gomplate
 RUN curl -sL -o /usr/local/bin/gomplate \
     https://github.com/hairyhenderson/gomplate/releases/download/v3.6.0/gomplate_linux-amd64 \
    && chmod -c +x /usr/local/bin/gomplate \
    && gomplate --version
 # install argo cli
-RUN argo_version="v2.8.2" \
+RUN argo_version="v2.12.8" \
   && curl --location --output argo \
     https://github.com/argoproj/argo/releases/download/"${argo_version}"/argo-linux-amd64 \
-  && install -t /usr/local/bin argo
+  && install -t /usr/local/bin argo \
+  && rm argo
