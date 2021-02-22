@@ -38,7 +38,8 @@ RUN curl --silent --location --output /usr/local/bin/gomplate \
    && gomplate --version
 # install argo cli
 RUN argo_version="v2.12.8" \
-  && curl --silent --location --output argo \
-    https://github.com/argoproj/argo/releases/download/"${argo_version}"/argo-linux-amd64 \
+  && curl --silent --location \
+    https://github.com/argoproj/argo/releases/download/"${argo_version}"/argo-linux-amd64.gz \
+    | gzip -d > argo \
   && install --target-directory=/usr/local/bin argo \
   && rm argo
