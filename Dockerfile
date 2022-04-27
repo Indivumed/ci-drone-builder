@@ -18,9 +18,8 @@ RUN curl --silent --location --output /usr/local/bin/aws-iam-authenticator \
    && chmod +x /usr/local/bin/aws-iam-authenticator \
    && aws-iam-authenticator version
 # install kubectl
-RUN KUBECTL_VERSION=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt) \
-  && curl --tlsv1.3 --ssl-reqd --silent --location --output /usr/local/bin/kubectl \
-     https://storage.googleapis.com/kubernetes-release/release/$KUBECTL_VERSION/bin/linux/amd64/kubectl \
+RUN curl --tlsv1.3 --ssl-reqd --silent --location --output /usr/local/bin/kubectl \
+     https://storage.googleapis.com/kubernetes-release/release/v1.20.4/bin/linux/amd64/kubectl \
   && chmod +x /usr/local/bin/kubectl \
   && kubectl version --client=true \
   && echo "source <(kubectl completion bash) \nalias k=kubectl \ncomplete -F __start_kubectl k" >> ~/.bashrc
