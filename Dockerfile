@@ -2,7 +2,7 @@ FROM docker:20.10.18-dind
 ENV TZ=UTC
 RUN apk update \
   && apk add python3-dev py3-pip rust libffi-dev openssl-dev gcc libc-dev make \
-             curl wget bash git sqlite jq cargo \
+             curl wget bash git sqlite jq cargo parallel \
   && echo "source /etc/profile" >> ~/.bashrc
 RUN pip3 install --upgrade pip
 # install docker-compose and AWS tools
