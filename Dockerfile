@@ -1,4 +1,4 @@
-FROM docker:20.10.14-dind
+FROM docker:20.10.18-dind
 ENV TZ=UTC
 RUN apk update \
   && apk add python3-dev py3-pip rust libffi-dev openssl-dev gcc libc-dev make \
@@ -8,8 +8,8 @@ RUN pip3 install --upgrade pip
 # install docker-compose and AWS tools
 # FIXME: awsebcli is having pretty outdated dependencies to docker-compose, requests and awscli
 RUN pip3 install --ignore-installed \
-                 docker-compose==1.25.5 awscli==1.22.54 awsebcli==3.20.3 \
-                 kubernetes==23.3.0 requests==2.26.0 \
+                 docker-compose==1.29.2 awscli==1.25.77 \
+                 kubernetes==24.2.0 requests==2.28.1 \
   && docker-compose --version \
   && echo "complete -C '/usr/bin/aws_completer' aws" >> ~/.bashrc \
   && aws --version
@@ -20,7 +20,7 @@ RUN curl --silent --location --output /usr/local/bin/aws-iam-authenticator \
    && aws-iam-authenticator version
 # install kubectl
 RUN curl --tlsv1.3 --ssl-reqd --silent --location --output /usr/local/bin/kubectl \
-     https://storage.googleapis.com/kubernetes-release/release/v1.22.9/bin/linux/amd64/kubectl \
+     https://storage.googleapis.com/kubernetes-release/release/v1.23.7/bin/linux/amd64/kubectl \
   && chmod +x /usr/local/bin/kubectl \
   && kubectl version --client=true \
   && echo "source <(kubectl completion bash) \nalias k=kubectl \ncomplete -F __start_kubectl k" >> ~/.bashrc
@@ -38,7 +38,7 @@ RUN curl --silent --location --output /usr/local/bin/gomplate \
    && gomplate --version
 # install argo cli
 RUN curl --silent --location \
-      https://github.com/argoproj/argo-workflows/releases/download/v3.3.3/argo-linux-amd64.gz \
+      https://github.com/argoproj/argo-workflows/releases/download/v3.3.4/argo-linux-amd64.gz \
     | gzip -d > argo \
   && install --target-directory=/usr/local/bin argo \
   && rm argo
