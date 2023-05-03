@@ -1,4 +1,4 @@
-FROM docker:23.0.4-dind
+FROM docker:23.0.5-dind
 ENV TZ=UTC
 RUN apk update \
   && apk add python3-dev py3-pip rust libffi-dev openssl-dev gcc libc-dev make \
